@@ -1,0 +1,24 @@
+//
+   Created by MaoX on 2016/2/27.
+
+extends ../layout
+
+block content
+    .container
+        .page-header 注册
+        form.form-horizontal(method="POST", action="/register")
+            .form-group
+                label.col-sm-2.control-label(for="loginName") 用户名
+                .col-sm-10
+                    input#loginName.form-control(name="user[name]", type="text")
+            .form-group
+                label.col-sm-2.control-label(for="loginPassword") 密码
+                .col-sm-10
+                    input#loginPassword.form-control(name="user[password]", type="password")
+            .form-group
+                label.col-sm-2.control-label(for="confirmPassword") 确认密码
+                .col-sm-10
+                    input#confirmPassword.form-control(name="user[confirmPassword]", type="password")
+            .form-group
+                .col-sm-offset-2.col-sm-10
+                    button.btn.btn-success(type="submit") 提交

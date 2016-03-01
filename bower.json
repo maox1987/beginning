@@ -1,0 +1,25 @@
+{
+  "name": "beginning",
+  "description": "my first project",
+  "main": "app.js",
+  "authors": [
+    "maox1987@163.com"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "maox"
+  ],
+  "moduleType": [],
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "public/bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "^3.3.6"
+  }
+}

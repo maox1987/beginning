@@ -1,0 +1,32 @@
+{
+  "name": "beginning",
+  "version": "0.0.1",
+  "description": "my first project",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "maox"
+  ],
+  "author": "maox1987@163.com",
+  "license": "MIT",
+  "dependencies": {
+    "bcrypt": "^0.8.5",
+    "body-parser": "^1.15.0",
+    "express": "^4.13.4",
+    "express-session": "^1.13.0",
+    "file-stream-rotator": "0.0.6",
+    "jade": "^1.11.0",
+    "morgan": "^1.7.0",
+    "mysql": "^2.10.2",
+    "sequelize": "^3.19.3"
+  },
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-concurrent": "^2.2.1",
+    "grunt-contrib-watch": "^0.6.1",
+    "grunt-nodemon": "^0.4.1"
+  }
+}
