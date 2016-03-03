@@ -16,22 +16,30 @@ exports.showRegister = function(req,res){
     })
 };
 
-exports.register =function(req,res){
+exports.register =function(req,res,next){
+    var _user= req.body.user;
     models.User.create({
         name: req.body.user.name,
         password:req.body.user.password
 
     }).then(function(user){
-        console.log(user);
-        res.redirect('/login');
-    });
+        if(user) {
+            res.redirect('/login');
+        }else{
+            return res.redirect('');
+        }
+    }).catch(function(err){
+        next(err);
+    })
 
 };
 
 exports.login =function(req,res){
     var _user = req.body.user;
     if(!_user.name){
-        return console.log('请输入用户名');
+        console.log('请输入用户名');
+
+        return res.redirect('');
     }
     models.User.findOne({where:{name:_user.name}})
         .then(function(user){
@@ -43,17 +51,20 @@ exports.login =function(req,res){
                         console.log(user.dataValues.name+" is Loginned");
                         req.session.user ={
                             name:user.name,
-                            id:user.id
+                            id:user.id,
+                            role:user.role
                         };
-                        res.redirect('/');
+                        return res.redirect('/');
                     }else{
                         console.log('password is wrong');
+                        return res.redirect('');
                     }
 
                 })
             }
             else{
                 console.log(_user.name+" is not existed");
+                return res.redirect('');
             }
         });
 };
@@ -63,93 +74,106 @@ exports.logout=function(req,res){
     return res.redirect('/');
 };
 
-//todo:
-exports.info= function(req,res){
+
+exports.info= function(req,res,next){
     var _user = req.session.user;
-    if(_user){
-        models.User.findById(_user.id)
-            .then(function(user){
-                if(user){
-                    res.render('user/info',{
-                        title:'个人信息',
-                        user:{
-                            name:user.name,
-                            phone:user.phone,
-                            role:user.role
-                        }
-                    });
+    models.User.findById(_user.id)
+        .then(function(user){
+            if(!user){
+                var err = new Error('用户不存在');
+                err.status = 500;
+                return next(err);
+            }
+            res.render('user/info',{
+                title:'个人信息',
+                user:{
+                    name:user.name,
+                    phone:user.phone,
+                    role:user.role
                 }
-            })
-    }
+            });
+
+        })
+
 
 };
 
-//todo:
+
 exports.showEdit= function(req,res){
     var _user = req.session.user;
-    if(_user){
-        models.User.findById(_user.id)
-            .then(function(user){
-                if(user){
-                    res.render('user/edit',{
-                        title:'修改信息',
-                        user:{
-                            name:user.name,
-                            phone:user.phone
-                        }
-                    });
-                }
-            })
-    }
+    models.User.findById(_user.id)
+        .then(function(user){
+            if(!user){
+                var err = new Error('用户不存在');
+                err.status = 500;
+                return next(err);
+            }
 
+            res.render('user/edit',{
+                title:'修改信息',
+                user:{
+                    name:user.name,
+                    phone:user.phone
+                }
+            });
+
+        });
 };
 
-//todo:
+
 exports.edit= function(req,res){
     var _user = req.body.user;
     var user = req.session.user;
-    if(user){
-        models.User.update({
-            name:_user.name,
-            phone:_user.phone
-        },{
-            where:{id:user.id}
-        }).then(function(results){
-            if(results.length>0){
-                req.session.user.name = _user.name;
-                req.session.user.phone = _user.phone;
-            }
-            res.redirect('/user/info');
-        })
-    }
+
+    models.User.update({
+        name:_user.name,
+        phone:_user.phone
+    },{
+        where:{id:user.id}
+    }).then(function(results){
+        if(results.length>0){
+            req.session.user.name = _user.name;
+            req.session.user.phone = _user.phone;
+        }
+        res.redirect('/user/info');
+    }).catch(function(err){
+        return next(err);
+    })
+
 };
 
-//todo:
+
 exports.showChangePassword= function(req,res){
     res.render('user/changePassword',{
         title:'修改密码'
     });
 };
 
-//todo:
 exports.changePassword= function(req,res){
     var password = req.body.password;
     var user = req.session.user;
-    if(user){
-        models.User.findById(user.id)
-            .then(function(user){
-                if(user){
-                    user.comparePassword(password.old,function(err,isMatch){
-                        if(isMatch){
-                            user.setPassword = password.new;
-                            user.save().then(function(){
-                                res.redirect('/');
-                            })
-                        }else{
-                            console.log('password is not match');
-                        }
+    models.User.findById(user.id)
+        .then(function(user){
+            if(!user){
+                var err = new Error('用户不存在');
+                err.status = 500;
+                return next(err);
+            }
+
+            user.comparePassword(password.old,function(err,isMatch){
+                if(isMatch){
+                    user.setPassword = password.new;
+                    user.save().then(function(){
+                        res.redirect('/');
+                    }).catch(function(err){
+                        return next(err);
                     })
+                }else{
+                    console.log('password is not match');
+                    return res.redirect('');
                 }
             })
-    }
+
+        });
+
 };

@@ -1,0 +1,35 @@
+//
+   Created by MaoX on 2016/3/2.
+
+extends layout
+
+block content2
+    .panel.panel-default
+        .panel-heading
+            span.panel-title #{title}
+        .panel-body
+            table.table.table-hover.table-bordered
+                thead
+                    tr
+                        th 用户名
+                        th 手机号
+                        th 角色权限
+                        th 注册时间
+                        th 操作
+                tbody
+                    each item in users
+                        tr
+                            td #{item.name}
+                            td #{item.phone}
+                            td #{item.role}
+                            td #{moment(item.createAt).format('YYYY年M月D日')}
+                            td
+                                a.btn.btn-default(href="/admin/user/#{item.id}") 查看
+                                a.btn.btn-default(href="/admin/user/edit/#{item.id}") 修改
+
+            ul.pager
+                li(class="#{page.current<1?'disabled':''}")
+                    a(href="/admin/user/list?page=#{page.current-1}") 上一页
+                li &nbsp;第#{page.current+1}页，共#{page.total}页&nbsp;
+                li(class="#{page.current>page.total-2?'disabled':''}")
+                    a(href="/admin/user/list?page=#{page.current+1}") 下一页

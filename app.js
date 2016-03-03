@@ -28,7 +28,16 @@ models.sequelize.sync({force:true}).then(function(){
         name:"maox",
         password:"123456",
         role:51
+    }).then(function(){
+        for(var i=0;i<30;i++){
+            models.User.create({
+                name:'test'+i,
+                password:"123456",
+                role:10
+            })
+        }
     });
+
 });
 
 //使用中间件
@@ -48,6 +57,33 @@ app.use(function(req,res,next){
 });
 
 app.use('/',router);
+
+app.use(function(req,res,next){
+    var err = new Error('Not Found');
+    err.status = 404;
+    next(err);
+});
+
+//error handlers
+
+app.use(function(err,req,res,next){
+    if(typeof(err) == "number"){
+        if(err === 401){
+            return res.redirect('/login');
+        }
+        return res.render('error',{
+            message:err
+        })
+    }
+    if(err.status === 401){
+        return res.redirect('/login');
+    }
+    res.status(err.status || 500);
+    res.render('error',{
+        message:err.message,
+        error:err
+    })
+});
 
 
 if('development' === app.get('env')){
