@@ -11,3 +11,7 @@ exports.index=function(req,res){
     })
 };
 
+exports.store =function(req,res){
+    res.redirect('/store/index.html');
+}
+

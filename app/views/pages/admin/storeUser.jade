@@ -1,0 +1,47 @@
+//
+   Created by MaoX on 2016/3/4.
+
+extends layout
+
+block content2
+    .panel.panel-default
+        .panel-heading
+            span.panel-title #{title}
+        .panel-body
+            dl.dl-horizontal
+                dt 店铺名
+                dd=store.name
+                dt 店主
+                dd=store.owner
+                dt 联系电话
+                dd=store.phone
+                dt 地址
+                dd=store.address
+            hr
+            form.form-horizontal(method="post",action="/admin/store/addUser")
+                input#inputStoreId(type="hidden" name="store[id]" value=store.id)
+                .form-group
+                    label.control-label.col-sm-2(for='inputUserName') 添加账号
+                    .col-sm-4
+                        input#inputUserName.form-control(type="text",name="user[name]" placeholder="用户名")
+                    .col-sm-4
+                        input.btn.btn-primary(type="submit" value="添加")
+
+            hr
+            table.table.table-hover.table-bordered
+                thead
+                    tr
+                        th 用户名
+                        th 手机号
+                        th 店铺权限
+                        th 操作
+                tbody
+                    each item in users
+                        tr(class="item-id-#{item.id}")
+                            td #{item.name}
+                            td #{item.phone}
+                            td #{item.Manager.role}
+                            td
+                                button.btn.btn-danger.remove(type="button" data-store-id="#{store.id}" data-user-id="#{item.id}") 移除
+
+    script(src="/js/storeUser.js")

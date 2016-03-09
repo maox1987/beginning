@@ -22,10 +22,11 @@ block content2
                             td #{item.name}
                             td #{item.phone}
                             td #{item.role}
-                            td #{moment(item.createAt).format('YYYY年M月D日')}
+                            td #{moment(item.createdAt).format('YYYY年M月D日')}
                             td
                                 a.btn.btn-default(href="/admin/user/#{item.id}") 查看
-                                a.btn.btn-default(href="/admin/user/edit/#{item.id}") 修改
+                                span &nbsp;&nbsp;
+                                a.btn.btn-default(href="/admin/user/edit/#{item.id}") 编辑
 
             ul.pager
                 li(class="#{page.current<1?'disabled':''}")

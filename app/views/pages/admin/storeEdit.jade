@@ -1,0 +1,34 @@
+//
+   Created by MaoX on 2016/3/4.
+
+extends layout
+
+block content2
+    .panel.panel-default
+        .panel-heading
+            span.panel-title #{title}
+        .panel-body
+            form.form-horizontal(method="post",action="/admin/store/edit")
+                input#storeId(type="hidden",name="store[id]",value=store.id)
+                .form-group
+                    label.col-sm-2.control-label(for="storeName") 店铺名
+                    .col-sm-10
+                        input#storeName.form-control(type="text",name="store[name]",value=store.name)
+                .form-group
+                    label.col-sm-2.control-label(for="storeOwner") 店主
+                    .col-sm-10
+                        input#storeOwner.form-control(type="text",name="store[owner]",value=store.owner)
+                .form-group
+                    label.col-sm-2.control-label(for="storePhone") 联系电话
+                    .col-sm-10
+                        input#storePhone.form-control(type="text",name="store[phone]",value=store.phone)
+                .form-group
+                    label.col-sm-2.control-label(for="storeAddress") 地址
+                    .col-sm-10
+                        input#storeAddress.form-control(type="text",name="store[address]",value=store.address)
+                hr
+                .form-group
+                    .col-sm-offset-2.col-sm-10
+                        button.btn.btn-primary(type="submit") 提交
+                        span &nbsp;&nbsp;
+                        a.btn.btn-default(href="/admin/store/list") 返回

@@ -31,4 +31,15 @@ router.post('/user/changePassword',authRequired(),User.changePassword);
 router.get('/admin/user/list',authRequired(20),Admin.user.list);
 router.get('/admin/user/:id',authRequired(20),Admin.user.info);
 router.get('/admin/user/edit/:id',authRequired(20),Admin.user.showEdit);
-router.post('/admin/user/edit/:id',authRequired(20),Admin.user.edit);
+router.post('/admin/user/edit',authRequired(20),Admin.user.edit);
+
+router.get('/admin/store/list',authRequired(20),Admin.store.list);
+router.get('/admin/store/:id',authRequired(20),Admin.store.info);
+router.get('/admin/store/edit/:id',authRequired(20),Admin.store.showEdit);
+router.post('/admin/store/edit',authRequired(20),Admin.store.edit);
+router.get('/admin/store/:id/user',authRequired(20),Admin.store.user);
+router.post('/admin/store/addUser',authRequired(20),Admin.store.addUser);
+router.post('/admin/store/removeUser',authRequired(20),Admin.store.removeUser);
+
+//店铺管理
+router.get('/store',Index.store);

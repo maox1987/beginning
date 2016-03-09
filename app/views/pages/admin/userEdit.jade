@@ -1,33 +1,29 @@
 //
    Created by MaoX on 2016/3/2.
 
-extends ../../layout
+extends layout
 
-block content
-    .container
-        .row
-            .col-sm-2
-                include ../../includes/userMenu
-            .col-sm-10
-                .panel.panel-default
-                    .panel-heading
-                        span.panel-title #{title}
-                    .panel-body
-                        form.form-horizontal(method="post",action="/admin/user/edit/#{user.id}")
-                            .form-group
-                                label.col-sm-2.control-label(for="userName") 用户名
-                                .col-sm-10
-                                    input#userName.form-control(type="text",name="user[name]",value=user.name)
-                            .form-group
-                                label.col-sm-2.control-label(for="userPhone") 手机号码
-                                .col-sm-10
-                                    input#userPhone.form-control(type="text",name="user[phone]",value=user.phone)
-                            .form-group
-                                label.col-sm-2.control-label(for="userRole") 角色权限
-                                .col-sm-10
-                                    input#userRole.form-control(type="text",name="user[role]",value=user.role)
-                            hr
-                            .form-group
-                                .col-sm-offset-2.col-sm-10
-                                    button.btn.btn-primary(type="submit" style="margin-right:20px") 提交
-                                    a.btn.btn-default(href="/admin/user/list") 返回
+block content2
+    .panel.panel-default
+        .panel-heading
+            span.panel-title #{title}
+        .panel-body
+            form.form-horizontal(method="post",action="/admin/user/edit")
+                input#userId(type="hidden",name="user[id]",value=user.id)
+                .form-group
+                    label.col-sm-2.control-label(for="userName") 用户名
+                    .col-sm-10
+                        input#userName.form-control(type="text",name="user[name]",value=user.name)
+                .form-group
+                    label.col-sm-2.control-label(for="userPhone") 手机号码
+                    .col-sm-10
+                        input#userPhone.form-control(type="text",name="user[phone]",value=user.phone)
+                .form-group
+                    label.col-sm-2.control-label(for="userRole") 角色权限
+                    .col-sm-10
+                        input#userRole.form-control(type="text",name="user[role]",value=user.role)
+                hr
+                .form-group
+                    .col-sm-offset-2.col-sm-10
+                        button.btn.btn-primary(type="submit" style="margin-right:20px") 提交
+                        a.btn.btn-default(href="/admin/user/list") 返回

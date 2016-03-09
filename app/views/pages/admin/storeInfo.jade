@@ -1,0 +1,27 @@
+//
+   Created by MaoX on 2016/3/4.
+
+extends layout
+
+block content2
+    .panel.panel-default
+        .panel-heading
+            span.panel-title #{title}
+        .panel-body
+            dl.dl-horizontal
+            dt 店铺名
+            dd=store.name
+            dt 店主
+            dd=store.owner
+            dt 联系电话
+            dd=store.phone
+            dt 地址
+            dd=store.address
+            dt 创建时间
+            dd #{moment(store.createdAt).format('YYYY年M月D日 H时m分s秒')}
+            dt 修改时间
+            dd #{moment(store.updatedAt).format('YYYY年M月D日 H时m分s秒')}
+            hr
+            a.btn.btn-primary(href="/admin/store/edit/#{store.id}")
+                span.glyphicon.glyphicon-edit
+                span &nbsp;编辑

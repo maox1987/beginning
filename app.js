@@ -28,14 +28,6 @@ models.sequelize.sync({force:true}).then(function(){
         name:"maox",
         password:"123456",
         role:51
-    }).then(function(){
-        for(var i=0;i<30;i++){
-            models.User.create({
-                name:'test'+i,
-                password:"123456",
-                role:10
-            })
-        }
     });
 
 });
