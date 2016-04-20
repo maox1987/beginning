@@ -12,7 +12,7 @@ var fs = require('fs');
 var FileStreamRotator = require('file-stream-rotator');
 //环境变量
 var app = express();
-
+console.log('123');
 var logDirectory = __dirname+'/log';
 fs.existsSync(logDirectory) || fs.mkdirSync(logDirectory);//保证日志目录存在
 
